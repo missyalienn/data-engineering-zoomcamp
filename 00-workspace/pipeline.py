@@ -1,7 +1,10 @@
 #set up data pipeline
-
+import sys 
 import pandas as pd
+print(sys.argv)
 
-#example: load a csv file with pandas 
+day = sys.argv[1]
 
-print("job successful")
+#example: do some data stuff w pandas (load a csv file etc)
+
+print("job finished succesfully for day = {day}")
