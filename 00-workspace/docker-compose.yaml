@@ -4,9 +4,9 @@ services:
     image: postgres:13
     container_name: postgres_nyc_taxi
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root 
-      POSTGRES_DB: nyc_taxi
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -15,10 +15,10 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin_nyc_taxi
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root 
+     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports: 
-    - 8080:80
+    - "8080:80"
     depends_on:
       - postgres
 volumes:
