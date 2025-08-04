@@ -5,6 +5,6 @@ RUN apt-get update && apt-get install -y wget
 RUN pip install --no-cache-dir pandas sqlalchemy psycopg2-binary
 
 WORKDIR /app
-COPY upload-data.py upload-data.py
+COPY ingest_data.py ingest_data.py
 
-ENTRYPOINT ["python", "upload-data.py"]
+ENTRYPOINT ["python", "ingest_data.py"]
