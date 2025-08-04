@@ -1,8 +1,10 @@
-FROM python:3-slim 
+FROM python:3-slim
 
-RUN pip install pandas 
+RUN apt-get update && apt-get install -y wget
+
+RUN pip install --no-cache-dir pandas sqlalchemy psycopg2-binary
 
 WORKDIR /app
-COPY pipeline.py pipeline.py
+COPY upload-data.py upload-data.py
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT ["python", "upload-data.py"]
