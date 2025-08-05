@@ -18,9 +18,9 @@ services:
      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports: 
-    - "8080:80"
-    depends_on:
-      - postgres
+    - "8080:80" #access pgadmin on localhost:8080
+    volumes:
+      - ./data_pgadmin:/var/lib/pgadmin
   ingest-service:
     build:
       context: .          # <-- folder path as string (usually current dir)
