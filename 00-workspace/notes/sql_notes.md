@@ -11,10 +11,76 @@
 
   - Goal:  join yellow_taxi_data with zones so that instead of seeing PULocationID: 142, we'll get something like: PULocationID: 142 (Harlem-East)
 
+    **Self-join method. Not best practice**
+
+    ``` sql 
+    SELECT 
+    tpep_pickup_datetime, 
+    tpep_dropoff_datetime, 
+    total_amount, 
+    CONCAT(zpu."Borough", '/', zpu."Zone") AS "pickup_loc", 
+    CONCAT(zdo."Borough", '/', zdo."Zone") AS "dropoff_loc"
+    FROM 
+    yellow_taxi_trips t, 
+    zones zpu, 
+    zones zdo 
+    WHERE t."PULocationID" = zpu."LocationID"
+        AND t."DOLocationID" = zdo."LocationID"
+    LIMIT 100
+
+- What’s happening in the query is that you're telling the taxi table to join on the zones table twice — once for the pickup location, and once for the dropoff — by giving each use a different alias (zpu and zdo). 
+
+    - Joining yellow_taxi_trips → to zones (as zpu) for the pickup info
+
+    - Joining yellow_taxi_trips → to zones (as zdo) for the dropoff info
+
+*This is not the ideal method. If you forget a JOIN it creates a Cartesian product...*
+
+ **WTF is a Cartesian Product?** 
+- Result of joining two or more tables WITHOUT a join condition 
+- Literally multiplies every row in table A with every row in TABLE B. 
+
+**Why is it bad** 
+- It explodes your row count and memory and slows queries massively. 
+
+**Best Practice: Use Explicit INNER JOIN**
+``` sql SELECT 
+    t.tpep_pickup_datetime, 
+    t.tpep_dropoff_datetime, 
+    t.total_amount, 
+    CONCAT(zpu."Borough", '/', zpu."Zone") AS pickup_loc, 
+    CONCAT(zdo."Borough", '/', zdo."Zone") AS dropoff_loc
+    FROM 
+    yellow_taxi_trips t
+    INNER JOIN zones zpu ON t."PULocationID" = zpu."LocationID"
+    INNER JOIN zones zdo ON t."DOLocationID" = zdo."LocationID"
+    LIMIT 100
+```
 
 
-- **05:20 – Using an explicit INNER JOIN**  
-  Shows the preferred approach using `INNER JOIN ON` for clear, explicit join conditions.
+### Concept of a SET 
+- A **set** is a collection of **unique** values — no duplicates, no specific order.
+
+- If you have a table column like PULocationID, run this query: 
+``` sql SELECT 
+    DISTINCT PULocationID
+    FROM yellow_taxi_trips; 
+```
+- You create a SET of all UNIQUE pickup LocationIDs (PULocationID)
+
+ - And then if you say: 
+
+``` sql WHERE PULocationID 
+    NOT IN (SELECT LocationID FROM zones) 
+```
+- You're doing a set difference: Show me all pickup IDs in the trips table that aren’t in the zones table.
+i.e. What’s in one set but not the other.
+
+
+
+
+
+--
 
 - **06:05 – Checking for records with Location IDs not in the zones table**  
   Runs a query to identify taxi records with `LocationID`s that don’t exist in the zones table — a sanity check for data quality.
