@@ -1,16 +1,17 @@
-## 🚀 Terraform Overview
+## 🚀Terraform Overview 
+  [Video](https://www.youtube.com/watch?v=18jIzE41fJ4&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=2)
 
-[Video](https://www.youtube.com/watch?v=18jIzE41fJ4&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=2)
+### ⚠️ CAUTION 
 
-### ⚠️ CAUTION
+Terraform makes it easy to provision cloud resources quickly. 
 
-Terraform provisions expensive cloud resources — FAST. 
+> ✨ **KNOW WHAT YOU ARE DEPLOYING BEFORE YOU DEPLOY.** 🙃
 
-You are ONE (`terraform apply`) away from accidentally deploying a s*it ton of expensive cloud infrastrucure. 
+You are ONE (`terraform apply`) away from accidentally deploying a s*it ton of expensive infrastructure 🔥💸
 
->   **KNOW WHAT YOU ARE DEPLOYING BEFORE you deploy.** 
--  Know what services cost. 
--  Always double-check configs
+- Know how much services cost before you hit apply.
+- Always **double-check configs** and review `terraform plan` before you deploy. 
+- Use `terraform destroy` to clean up and remove resources when you’re done.  Don’t leave resources running!
 
 ### Introduction
 
