@@ -2,46 +2,15 @@
 
 ## [SQL Joins and Aggregations in the Taxi Dataset](https://www.youtube.com/watch?v=QEcps_iskgg&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=10)
 
-### Video Summary
+## Exploring NYC Taxi Dataset in pgAdmin
 
-- **00:59 – Joining yellow taxi table with the zones lookup table (implicit inner join)**  
-  Shows how to link trip records in (`yellow_taxi_data`) with location details in (`zones`) using an implicit join - so that we can have actual location names corresponding to the LocationIDs (which are just numbers right now)
+ ### Joining yellow taxi table with the zones lookup table 
+  - How to link (`yellow_taxi_trips`) with location details in (`zones`) using an implicit join - so that we can have actual location names corresponding to the LocationIDs (which are just numbers right now)
 
-  - yellow_taxi_data table contains pickup and dropoff LocationIDs (PULocationID and DOLocationID). The zones table maps the LocationIDs to the actual location names/neighborhoods - "Upper West Side" for example. 
+  - `yellow_taxi_trips` table contains pickup and dropoff LocationIDs (PULocationID and DOLocationID). 
+  - `zones` table maps the LocationIDs to the actual location names/neighborhoods - "Upper West Side" 
 
-  - Goal:  join yellow_taxi_data with zones so that instead of seeing PULocationID: 142, we'll get something like: PULocationID: 142 (Harlem-East)
-
-    **Self-join method. Not best practice**
-
-    ``` sql 
-    SELECT 
-    tpep_pickup_datetime, 
-    tpep_dropoff_datetime, 
-    total_amount, 
-    CONCAT(zpu."Borough", '/', zpu."Zone") AS "pickup_loc", 
-    CONCAT(zdo."Borough", '/', zdo."Zone") AS "dropoff_loc"
-    FROM 
-    yellow_taxi_trips t, 
-    zones zpu, 
-    zones zdo 
-    WHERE t."PULocationID" = zpu."LocationID"
-        AND t."DOLocationID" = zdo."LocationID"
-    LIMIT 100
-
-- What’s happening in the query is that you're telling the taxi table to join on the zones table twice — once for the pickup location, and once for the dropoff — by giving each use a different alias (zpu and zdo). 
-
-    - Joining yellow_taxi_trips → to zones (as zpu) for the pickup info
-
-    - Joining yellow_taxi_trips → to zones (as zdo) for the dropoff info
-
-*This is not the ideal method. If you forget a JOIN it creates a Cartesian product...*
-
- **WTF is a Cartesian Product?** 
-- Result of joining two or more tables WITHOUT a join condition 
-- Literally multiplies every row in table A with every row in TABLE B. 
-
-**Why is it bad** 
-- It explodes your row count and memory and slows queries massively. 
+  - **Goal:**  Join yellow_taxi_data with zones so that instead of seeing PULocationID: 142, we'll get something like: PULocationID: 142 (Harlem-East)
 
 **Best Practice: Use Explicit INNER JOIN**
 ``` sql SELECT 
@@ -56,7 +25,6 @@
     INNER JOIN zones zdo ON t."DOLocationID" = zdo."LocationID"
     LIMIT 100
 ```
-
 
 ### Concept of a SET 
 - A **set** is a collection of **unique** values — no duplicates, no specific order.
@@ -105,3 +73,19 @@ i.e. What’s in one set but not the other.
 
 - **15:26 – Closing**  
   Wraps up the session, summarizing how to enrich, clean, and analyze datasets using SQL joins and aggregations.
+
+ ### Appendix - Implicit JOIN - not best practice 
+- Here we are telling the taxi table to join on the zones table twice (once for pickup location and once for  dropoff) by giving each use a different alias (zpu and zdo). 
+
+    - Joining yellow_taxi_trips → to zones (as zpu) for the pickup info
+
+    - Joining yellow_taxi_trips → to zones (as zdo) for the dropoff info
+
+*This is not the ideal method. If you forget a JOIN it creates a Cartesian product...*
+
+ **WTF is a Cartesian Product?** 
+- Result of joining two or more tables WITHOUT a join condition 
+- Literally multiplies every row in table A with every row in TABLE B. 
+
+**Why is it bad** 
+- It explodes your row count and memory and slows queries massively. 
