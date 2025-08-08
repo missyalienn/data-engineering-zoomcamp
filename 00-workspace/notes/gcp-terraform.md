@@ -68,8 +68,9 @@
 
  [Terraform Docs - Google Cloud Provider ](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
 
-  - Click "use provider" in top right corner and copy/paste the snippet into main.tf 
-  - The command `terraform fmt` from terminal in vscode will format terraform file nicely 
-
+- Click "use provider" in top right corner and copy/paste the snippet into main.tf 
+- The command `terraform fmt` from terminal in vscode will format terraform file nicely 
+- Google cloud docs: Authentication for Terraform: https://cloud.google.com/docs/terraform/authentication
+- Terraform Docs - Authentication for Google Cloud: https://cloud.google.com/docs/terraform/authentication
 
 

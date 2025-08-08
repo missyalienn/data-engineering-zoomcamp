@@ -8,6 +8,6 @@ terraform {
 }
 
 provider "google" {
-  project     = "my-project-id"
+  project     = "nyc-taxi-data-eng"
   region      = "us-central1"
 }
