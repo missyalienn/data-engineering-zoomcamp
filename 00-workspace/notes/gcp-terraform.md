@@ -63,10 +63,13 @@
 - 🛠 Use `terraform plan` to preview and `terraform apply` to deploy.
 - 💣 Use `terraform destroy` to remove resources cleanly.
 
+## Resources
+ [GCP Key Management Best Practices](https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys?_gl=1*1tggf9c*_ga*MTAyNTE0NzcwNS4xNzU0NTk3MzA5*_ga_WH2QY8WWF5*czE3NTQ2ODMzMDIkbzQkZzEkdDE3NTQ2ODM0OTQkajM2JGwwJGgw)
 
+ [Terraform Docs - Google Cloud Provider ](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
 
-
-
+  - Click "use provider" in top right corner and copy/paste the snippet into main.tf 
+  - The command `terraform fmt` from terminal in vscode will format terraform file nicely 
 
 
 
