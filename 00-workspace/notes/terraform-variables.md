@@ -1,8 +1,23 @@
 
 ## Terraform Variables File 
+# TO DO: 
+ - create variables.tf and declare all inputs your resources will use.  
+ - the tutorial puts all the resource blocks in main.tf but its getting way too long to scroll 
+ - so we'll break up the resources into separate files for storage, big query, compute to keep things clean
+
+## Overview of Terraform Config
+
+- main.tf — keep your terraform {} and provider {} blocks (or split later)
+- variables.tf — declare inputs
+- storage.tf - create bucket resources using variables 
+- bigquery.tf create bigquery resoruces using variables 
+- compute.tf - we haven't done anything with this yet but will udpate it when time comes 
+
 
 ### Variables.tf 
 - Create variables.tf file 
+- Read up on variables in the docs: https://developer.hashicorp.com/terraform/language/values/variables
+  
 
 - Make variables for: 
   - location
