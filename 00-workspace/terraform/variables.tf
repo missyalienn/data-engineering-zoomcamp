@@ -19,11 +19,13 @@ variable "region" {
 variable "gcs_bucket_name" {
   description = "Unique name for the GCS bucket (required)"
   type        = string
+  default     = "nyc-taxi-data-eng-bucket"
 }
 
 variable "bq_dataset_name" {
   description = "BigQuery dataset name (required)"
   type        = string
+  default     = "nyc-taxi-data-eng-dataset"
 }
 
 variable "gcs_storage_class" {

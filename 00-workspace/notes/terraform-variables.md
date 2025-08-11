@@ -43,42 +43,10 @@
 
 
 
-# Variables Template
-
-
-# Project ID
-variable "project_id" {
-  description = "The GCP project ID where resources will be created."
-  type        = string
+## Anatomy of a Resource Block 
+resource "google_bigquery_dataset" "demo_dataset" {
+  ...
 }
 
-# Region
-variable "region" {
-  description = "The GCP region for resources."
-  type        = string
-  default     = "us-central1"
-}
-
-# Zone (optional if your resources are region-based)
-variable "zone" {
-  description = "The GCP zone for resources."
-  type        = string
-  default     = "us-central1-a"
-}
-
-# Environment name (dev, staging, prod, etc.)
-variable "environment" {
-  description = "Deployment environment name."
-  type        = string
-  default     = "dev"
-}
-
-# Labels (tags) for resources
-variable "labels" {
-  description = "A map of labels to apply to resources."
-  type        = map(string)
-  default = {
-    managed_by  = "terraform"
-    environment = "dev"
-  }
-}
+- "google_bigquery_dataset" is the resource type — it tells Terraform what kind of resource you’re managing (a BigQuery dataset in this case).
+- "demo_dataset" is the resource name (also called the local name or Terraform resource label). 
