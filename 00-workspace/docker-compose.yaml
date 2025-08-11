@@ -19,8 +19,8 @@ services:
      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports: 
     - "127.0.0.1:8080:80" #pgadmin listen on localhost (this machine) only 
-    volumes:
-      - ./data_pgadmin:/var/lib/pgadmin
+    #volumes:
+      #- ./data_pgadmin:/var/lib/pgadmin
   ingest-service:
     build:
       context: .          # <-- folder path as string (usually current dir)
