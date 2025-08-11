@@ -71,5 +71,4 @@ You are ONE (`terraform apply`) away from accidentally deploying a s*it ton of e
 - Continue [here](./terraform): `week_1_basics_n_setup/1_terraform_gcp/terraform`
 
 ### References
-https://learn.hashicorp.com/collections/terraform/gcp-get-started
 
