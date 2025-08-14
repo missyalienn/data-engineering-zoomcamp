@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "127.0.0.1:5432:5432" #postgres listen on localhost (this machine) only 
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
   pgadmin: 
@@ -18,12 +18,12 @@ services:
      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports: 
-    - "127.0.0.1:8080:80" #pgadmin listen on localhost (this machine) only 
+    - "8080:80" 
     #volumes:
       #- ./data_pgadmin:/var/lib/pgadmin
-  ingest-service:
-    build:
-      context: .          # <-- folder path as string (usually current dir)
-      dockerfile: Dockerfile
+  #ingest-service:
+    #build:
+      #context: .          # <-- folder path as string (usually current dir)
+      #dockerfile: Dockerfile
 volumes:
   pgdata:
