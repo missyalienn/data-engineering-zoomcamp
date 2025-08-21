@@ -20,7 +20,7 @@ variable "region" {
 variable "gcs_bucket_name" {
   description = "Unique name for GCS bucket (required)"
   type        = string
-  default     = "nyc_taxi_test_bucket"
+  default     = "airflow-nyc-taxi-bucket-2025"
 }
 
 variable "gcs_storage_class" {

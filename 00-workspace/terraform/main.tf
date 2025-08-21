@@ -12,7 +12,7 @@ provider "google" {
   region      = "us-central1"
 }
 
-resource "google_storage_bucket" "nyc-taxi-bucket" { 
+resource "google_storage_bucket" "airflow-taxi-bucket" { 
   name          = var.gcs_bucket_name
   location      = var.location
   storage_class = var.gcs_storage_class
@@ -20,7 +20,7 @@ resource "google_storage_bucket" "nyc-taxi-bucket" {
 
   lifecycle_rule {
     condition {
-      age = 1
+      age = 3
     }
     action {
       type = "AbortIncompleteMultipartUpload"
@@ -28,7 +28,7 @@ resource "google_storage_bucket" "nyc-taxi-bucket" {
   }
 }
 
-resource "google_bigquery_dataset" "nyc_taxi_dataset" {
-  dataset_id = var.bq_dataset_name
-  location   = var.location
-}
+#resource "google_bigquery_dataset" "nyc_taxi_dataset" {
+  #dataset_id = var.bq_dataset_name
+  #location   = var.location
+#}
