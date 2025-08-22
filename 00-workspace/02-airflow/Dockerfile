@@ -1,41 +1,34 @@
 
-FROM apache/airflow:3.0.5
+FROM apache/airflow:3.0.4-python3.11
 
 ENV AIRFLOW_HOME=/opt/airflow
 
+# SYSTEM PACKAGES (root)
 USER root
-RUN apt-get update -qq && apt-get install vim -qqq
-# git gcc g++ -qqq
+RUN apt-get update -qq && apt-get install -y vim
+# git gcc g++ -qqq  (uncomment if needed)
 
+# PYTHON REQUIREMENTS (airflow user)
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-# Docs - Google Cloud Recipe: https://airflow.apache.org/docs/docker-stack/recipes.html
-
-SHELL ["/bin/bash", "-o", "pipefail", "-e", "-u", "-x", "-c"]
-
-ARG CLOUD_SDK_VERSION=322.0.0
-ENV GCLOUD_HOME=/opt/google-cloud-sdk
-
-ENV PATH="${GCLOUD_HOME}/bin/:${PATH}"
-
-RUN DOWNLOAD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz" \
-    && TMP_DIR="$(mktemp -d)" \
-    && curl -fL "${DOWNLOAD_URL}" --output "${TMP_DIR}/google-cloud-sdk.tar.gz" \
-    && mkdir -p "${GCLOUD_HOME}" \
-    && tar xzf "${TMP_DIR}/google-cloud-sdk.tar.gz" -C "${GCLOUD_HOME}" --strip-components=1 \
-    && "${GCLOUD_HOME}/install.sh" \
-       --bash-completion=false \
-       --path-update=false \
-       --usage-reporting=false \
-       --additional-components alpha beta kubectl \
-       --quiet \
-    && rm -rf "${TMP_DIR}" \
-    && rm -rf "${GCLOUD_HOME}/.install/.backup/" \
-    && gcloud --version
+RUN su airflow -c "pip install --no-cache-dir -r requirements.txt"
 
 WORKDIR $AIRFLOW_HOME
 
+# GOOGLE CLOUD SDK INSTALL (root)
+USER root
+ARG CLOUD_SDK_VERSION=431.0.0
+ENV GCLOUD_HOME=/opt/google-cloud-sdk
+ENV PATH="${GCLOUD_HOME}/bin/:${PATH}"
+
+RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz \
+    && tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz -C /opt/ \
+    && /opt/google-cloud-sdk/install.sh --quiet --usage-reporting=false --path-update=true \
+    && rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz
+
+# SWITCH BACK TO AIRFLOW USER FOR RUNTIME
 USER ${AIRFLOW_UID}
+
+
+
+
 
