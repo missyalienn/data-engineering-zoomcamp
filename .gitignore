@@ -18,3 +18,5 @@ vault/
 #MacOS System Files 
 .DS_Store
 
+#Airflow
+config/
